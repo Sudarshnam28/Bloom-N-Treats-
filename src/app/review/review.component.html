@@ -1,0 +1,16 @@
+<h2 style="text-align: center;"><b>Customer Feedback</b></h2><br/><br/>
+<div style=" background-image: url('assets/images/cake1.jpg');" class="review-container">
+
+
+    <form class="review-form" (ngSubmit)="addReview()">
+
+        <label style="text-align: center;" for="text">Feedback:</label>
+        <textarea style="width: 80% ; justify-content: center;margin-left: 50px;" id="text" name="feedBack"
+            [(ngModel)]="newReview.feedBack" required></textarea>
+
+
+        <button (click)="onSubmit()" type="submit" style="margin-left:200px;background-color: crimson;">Submit</button>
+          
+    </form>
+    
+</div>

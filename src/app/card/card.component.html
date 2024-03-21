@@ -1,0 +1,82 @@
+<!--  <div class="container">
+    <div class="row">
+      <div class="col-sm-2" *ngFor="let card of cards" >
+        <div class="card" style="width: 200px; height: 200px;">
+          <img  class="card-img-top" src={{card.imgsrc}}  alt="" style="height: 100%; width: 100%;">
+          <div class="card-body">
+            <h5 class="card-title">{{card.name}}</h5>
+          </div>
+        </div>
+      </div> 
+      <div class="container-fluid">
+ <div class="row px-3 py-4" [ngStyle]="{'background': '#F7F7F7'}">
+              <div class="col-lg-6 col-xl-4 mb-4" *ngFor="let product of productList">
+               <div class="p-4 rounded bg-light">
+                 <div class="row align-items-center">
+                <div class="col-6">
+                 <img [src]="product.productImageUrl" class="img-fluid rounded-circle w-100" alt="">
+                </div>
+                <div class="col-6">
+                <a href="#" class="h5">{{product.productName}}</a>
+                <div class="d-flex my-3">
+                <i class="fas fa-star text-primary"></i>
+                <i class="fas fa-star text-primary"></i>
+                <i class="fas fa-star text-primary"></i>
+                <i class="fas fa-star text-primary"></i>
+                <i class="fas fa-star"></i>
+                </div>
+                <h4 class="mb-3">{{product.productPrice}}$</h4>
+                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>Add to Cart</a>
+                </div>
+                 </div>
+               </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="products.length == 0">
+            <h5 class="empty py-5">No Products Available At the moment!!</h5>
+          </ng-container>
+        </div>
+      </div> -->
+      <div class="container">
+        <div class="row">
+          <!-- Assuming you want to display cards -->
+          <!-- <div class="col-sm-2" *ngFor="let card of cards" >
+            <div class="card" style="width: 200px; height: 200px;">
+              <img class="card-img-top" [src]="card.imgsrc" alt="" style="height: 100%; width: 100%;">
+              <div class="card-body">
+                <h5 class="card-title">{{card.name}}</h5>
+              </div>
+            </div>
+          </div> -->
+      
+          <!-- Assuming you want to display products -->
+          <div class="col-lg-6 col-xl-4 mb-4" *ngFor="let product of productList">
+            <div class="p-4 rounded bg-light">
+              <div class="row align-items-center">
+                <div class="col-6">
+                  <img [src]="product.productImageUrl" class="img-fluid rounded-circle w-100" alt="">
+                </div>
+                <div class="col-6">
+                  <a href="#" class="h5">{{product.productName}}</a>
+                  <div class="d-flex my-3">
+                    <i class="fas fa-star text-primary"></i>
+                    <i class="fas fa-star text-primary"></i>
+                    <i class="fas fa-star text-primary"></i>
+                    <i class="fas fa-star text-primary"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <h4 class="mb-3">{{product.productPrice | currency:'INR' }}</h4>
+                  <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>Add to Cart</a>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Placeholder message when no products are available -->
+          <ng-container *ngIf="productList.length === 0">
+            <h5 class="empty py-5">No Products Available At the Moment!!</h5>
+          </ng-container>
+        </div>
+      </div>
+      

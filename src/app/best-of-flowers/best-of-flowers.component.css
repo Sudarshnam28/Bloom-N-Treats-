@@ -1,0 +1,61 @@
+/* Basic styles */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px; /* Adjust the gap as needed */
+  padding: 0 20px; /* Adjust the padding as needed */
+}
+
+.card {
+  width: calc(25% - 20px); /* Adjust the width and subtract the gap */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.card h3 {
+  margin-top: 10px;
+}
+
+.card p {
+  color: #666;
+  font-size: 23px;
+}
+.card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* Add to cart button styles */
+.add-to-cart {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  width: 50%;
+}
+
+.add-to-cart:hover {
+  background-color: skyblue;
+}

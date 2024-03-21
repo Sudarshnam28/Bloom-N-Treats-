@@ -1,0 +1,52 @@
+<h1 align="center">Cart Items</h1>
+<br />
+
+<div class="container d-flex justify-content-center">
+    <table class="table table-sm text-center table-hover table-bordered table-striped">
+        <thead class="bg-info">
+            <tr>
+                <th> ProductId </th>
+                <th> ProductName </th>
+                <th> Price </th>
+                <th> Quantity </th>
+                <th> Total </th>
+                <th> Increase </th>
+                <th> Decrease </th>
+                <th> Remove </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of cartItems">
+                <td>{{ item.productId }}</td>
+                <td>{{ item.productName }}</td>
+                <td>{{ item.productPrice }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.productPrice * item.quantity }}</td>
+                <td>
+                    <button class="btn btn-tertiary" (click)="increaseQuantity(item)">
+                        +
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-tertiary" (click)="decreaseQuantity(item)">
+                        -
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-tertiary" (click)="removeFromCart(item.productId)">
+                        ❌
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" align="right">Total Amount:</td>
+                <td colspan="4">{{ totalAmount }}</td>
+            </tr>
+            <tr>
+                <td colspan="8" align="center">
+                    <button class="btn btn-primary" (click)="buyNow()" >Buy Now</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

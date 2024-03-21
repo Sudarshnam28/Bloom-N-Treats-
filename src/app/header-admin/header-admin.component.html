@@ -1,0 +1,65 @@
+<!-- <nav class="navbar navbar-expand-lg bg-body-green" style="height: 80px;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="assets\images\logo1.png" style="height: 100px;width: 150px;"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="list-style-type: none;">
+          <li class="nav-item">
+            <a class="nav-link"  style="color: white;" [routerLink]="'categories'">categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color: white;" [routerLink]="'home'">Customers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  style="color: white;" [routerLink]="'products'">Products</a>
+          </li>
+         
+        </ul>
+        <form class="d-flex" role="search">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="list-style-type: none;">
+          </ul>
+        </form>
+      </div>
+    </div>
+  </nav>
+   -->
+   <nav class="navbar navbar-expand-lg bg-body-green" id="nav" style="height: 80px;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="assets\images\logo1.png" style="height: 100px;width: 150px;"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="list-style-type: none;">
+          <li class="nav-item">
+            <a class="nav-link" style="color: white;" routerLink="categories">Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color: white;" routerLink="customers">Customers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color: white;" routerLink="products">Products</a>
+          </li>
+        </ul>
+  
+        <form class="d-flex" role="search">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="list-style-type: none;">
+            <li class="nav-item" *ngIf="!service.setUserLoggedIn()">
+              <a class="nav-link" routerLink="/header/login">LogOut</a>
+            </li>
+            <ng-template *ngIf="service.setUserLoggedIn()">
+              <li class="nav-item">
+                <a class="nav-link" style="color: white;" routerLink="/header/login">Login</a>
+              </li>
+            </ng-template>
+          </ul>
+        </form>
+  
+       
+      </div>
+    </div>
+  </nav>
+  <router-outlet></router-outlet> 
+  
