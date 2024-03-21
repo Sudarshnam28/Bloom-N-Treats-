@@ -1,0 +1,133 @@
+.login-container {
+    width: 550px;
+    max-width: 600px;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 100px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+    position: relative;
+    background-image: url("/assets/images/login2.jpg");
+   margin-top: 30px;
+  }
+  
+  .login-image {
+    width: 200px;
+    height: 250px;
+    border-radius: 50%;
+    background-color:white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    margin-top: 100px;
+    margin-left: 30px;
+  }
+  
+  .login-image img {
+    width: 100%;
+    height: auto;
+    transform: rotate(-15deg);
+  }
+  
+  .login-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #4CAF50;
+  }
+  
+  .login-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+ label{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+ }
+  
+  .login-container input[type="text"],
+  .login-container input[type="password"] {
+    width: 250px;
+    margin-left: 200px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    font-size: 1.2rem;
+    color: #333;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  
+  .login-container .error-message {
+    color: red;
+    margin-top: 5px;
+    font-size: 0.8rem;
+  }
+  
+  .login-container button[type="submit"] {
+    width: 25%;
+    padding: 10px;
+     background-color:plum;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    margin-right: 20px;
+  }
+  
+  .login-container button[type="submit"] {
+    background-color:palevioletred;
+    
+  }
+  .buttons button {
+    float: right;
+    height: 40px;
+    width: 15%;
+    padding: 10px;
+    background-color:white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    margin-bottom: 1000px;
+  }
+
+  #button{
+    float: right;
+    height: 40px;
+    width: 25%;
+    padding: 10px;
+    background-color:salmon;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    margin-bottom: 1000px;
+    margin-right: 200px;
+  }
+ 
+  .signup-link {
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .signup-link:hover {
+    text-decoration: underline;
+    
+  }
+    
+  

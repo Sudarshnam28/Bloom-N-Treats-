@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Address Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+    }
+    .form-container {
+        max-width: 400px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    .form-group input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .form-group input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .form-group input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2 style="margin-left: 70px;">Address Form</h2>
+    <form action="">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="mobile">Mobile:</label>
+            <input type="text" id="mobile" name="mobile" required>
+        </div>
+        <div class="form-group">
+            <label for="street">Street:</label>
+            <input type="text" id="street" name="street" required>
+        </div>
+        <div class="form-group">
+            <label for="doorno">Door No:</label>
+            <input type="text" id="doorno" name="doorno" required>
+        </div>
+        <div class="form-group">
+            <label for="landmark">Landmark:</label>
+            <input type="text" id="landmark" name="landmark">
+        </div>
+        <div class="form-group">
+            <label for="district">District:</label>
+            <input type="text" id="district" name="district" required>
+        </div>
+        <div class="form-group">
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" required>
+        </div>
+        <div class="form-group">
+            <label for="pincode">Pincode:</label>
+            <input type="text" id="pincode" name="pincode" required>
+        </div>
+        <h5><input type="checkbox"/> Only Cash On Delivery available</h5>
+        <div class="form-group">
+            <input type="submit" value="Place Order" style="margin-left: 120px;" (click)="onSubmit()">
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+

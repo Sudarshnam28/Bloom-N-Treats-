@@ -1,0 +1,29 @@
+<div class="component-container">
+  <form #registerForm="ngForm" (ngSubmit)="registerCustomer(registerForm)">
+      <span>
+          <b>Name:</b><input type="text" id="name" name="name" [(ngModel)]="customerData.name" required minlength="5" maxlength="30"><br></span>
+      <span><br/>
+          <b>Gender:</b><select id="gender" name="gender" [(ngModel)]="customerData.gender" required>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+          </select><br/></span><br/>
+      <span>
+          <b>DOB:</b><input type="date" id="dob" name="dob" [(ngModel)]="customerData.dob" required><br></span><br/>
+      <span>
+          <b>Mobile:</b><input type="text" id="mobile" name="mobile" [(ngModel)]="customerData.mobile" #mobile="ngModel" required minlength="10" maxlength="10"><br></span><br/>
+      <span>
+          <b>Email:</b><input type="email" id="userName" name="userName" [(ngModel)]="customerData.userName" required minlength="6" maxlength="30"><br></span><br/>
+      <span>
+          <b>Password:</b><input type="password" id="password" name="password" [(ngModel)]="customerData.password" required minlength="8" maxlength="20"><br></span><br/>
+      <button type="submit">Sign Up</button>
+  </form>
+  <div>
+      <div *ngIf="mobile.errors?.['required'] && mobile.touched"><p>Please enter a valid Mobile number</p></div>
+      <div *ngIf="mobile.errors?.['minlength'] && mobile.touched"><p>Please enter 10 characters for mobile</p></div>
+      <div *ngIf="mobile.errors?.['maxlength'] && mobile.touched"><p>Please enter 10 characters for mobile</p></div>
+      <!-- Add similar error checks for the user name field -->
+      <div *ngIf="registerForm.controls['userName'].errors?.['required'] && registerForm.controls['userName'].touched"><p>Please enter a valid User Name</p></div>
+      <div *ngIf="registerForm.controls['userName'].errors?.['minlength'] && registerForm.controls['userName'].touched"><p>User Name must be at least 6 characters long</p></div>
+      <div *ngIf="registerForm.controls['userName'].errors?.['maxlength'] && registerForm.controls['userName'].touched"><p>User Name cannot exceed 30 characters</p></div>
+  </div>
+</div>

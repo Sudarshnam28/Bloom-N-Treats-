@@ -1,0 +1,553 @@
+<!-- <div class="quick-search">	
+
+	<div class="desktopError" style="display: none;">Please select Occasion or Gift Type</div>
+	<form id="quick-search-form" autocomplete="off">
+		<h3 class="quick-search-title">
+			Gift Finder
+		</h3>
+		<div class="sec occassions-input pincodeSec">
+			<input type="text" id="QuickSeacrchpincode" placeholder="Enter Pincode">
+			<input type="hidden" id="lastSelectedPincode">
+			<input type="hidden" id="lastSelectedAddress">
+			<div class="pincodeListItems" style="display: none;">
+				<ul id="pincodeUL"></ul>
+				<span id="dontknow">Don't Know Pincode?</span>
+				<span id="dontsee">Don't see your Pincode?</span>
+			</div>
+		</div>
+		<div class="sec occassions-input">
+			<input type="hidden" id="occassionsinput">
+			<span class="inputs-sec" id="occassions">Occasion<span class="placeholders">Birthday, Anniversary etc.</span></span>
+		</div>
+		<div class="sec gift-input">
+			<input type="hidden" id="gifttypeinput">
+			<span class="inputs-sec" id="giftType">Gift Type<span class="placeholders">Flowers, Cakes, Plants, etc.</span></span>
+		</div>
+		<div class="sec submit">
+			<button type="button" id="quick-search-btn">Find Gifts</button>
+		</div>
+		<div class="errors-msg">Select Occasion or Gift Type</div>
+	</form>
+</div> -->
+<div class="quick-search">	
+	<div class="desktopError">Please select Occasion or Gift Type</div>
+	<form id="quick-search-form" autoComplete="off">
+		<h3 class="quick-search-title">
+			Gift Finder
+		</h3>
+		<div class="sec occassions-input pincodeSec">
+			<input type="text" id="QuickSeacrchpincode" placeholder="Enter Pincode"/>
+			<input type="hidden" id="lastSelectedPincode"/>
+			<input type="hidden" id="lastSelectedAddress"/>
+			<div class="pincodeListItems">
+				<ul id="pincodeUL"></ul>
+				<span id="dontknow">Don&#x27;t Know Pincode?</span>
+				<span id="dontsee">Don&#x27;t see your Pincode?</span>
+			</div>
+		</div>
+		<div class="sec occassions-input">
+			<input type="hidden" id="occassionsinput"/>
+			<span class="inputs-sec" id="occassions">Occasion<span class="placeholders">Birthday, Anniversary etc.</span></span>
+		</div>
+		<div class="sec gift-input">
+			<input type="hidden" id="gifttypeinput"/>
+			<span class="inputs-sec" id="giftType">Gift Type<span class="placeholders">Flowers, Cakes, Plants, etc.</span></span>
+		</div>
+		<div class="sec submit">
+			<button type="button" id="quick-search-btn">Find Gifts</button>
+		</div>
+		<div class="errors-msg">Select Occasion or Gift Type</div>
+	</form>
+</div>
+<div class="transbg"></div>
+<script>
+	var availablePinCodes= [];
+	fetch("https://atcdel.fnp.com/chocolate/v1/global/static/pincode/availablepincodes").then(function(res){return res.json()}).then(function(data){availablePinCodes = data;
+	});
+	var popupSelectedPinCode = "";
+	var allData = null,
+		occassions = document.getElementById("occassions"),
+		giftType = document.getElementById("giftType"),
+		quickSearchBtn = document.getElementById("quick-search-btn"),
+		closeIcon = "",
+		transbg = "",
+		selectfirst = [],
+		selectfirstlength,
+		finalUrl;
+
+	occassions.addEventListener("click", function () {
+		createOccGiftTypes("", "occassionsDiv", false);
+		closeIcon = document.querySelectorAll(".listPopup i");
+		checkCloseIcons(closeIcon);
+		document.querySelectorAll(".listPopup").forEach(function (el) {
+			el.style.display = "none";
+		});
+		transbg = document.querySelector(".transbg");
+		if (transbg) {
+			transbg.style.display = "block";
+		}
+		var occassionsDiv = document.getElementById("occassionsDiv");
+		if (occassionsDiv) {
+			occassionsDiv.style.display = "block";
+		}
+		document.body.style.overflow = "hidden";
+		var msgtoast = document.querySelector(".desktopError");
+		msgtoast.style.display = "none";
+	});
+	giftType.addEventListener("click", function () {
+		createOccGiftTypes("", "giftTypesDiv", false);
+		closeIcon = document.querySelectorAll(".listPopup i");
+		checkCloseIcons(closeIcon);
+		document.querySelectorAll(".listPopup").forEach(function (el) {
+			el.style.display = "none";
+		});
+		transbg = document.querySelector(".transbg");
+		if (transbg) {
+			transbg.style.display = "block";
+		}
+		var giftTypesDiv = document.getElementById("giftTypesDiv");
+		if (giftTypesDiv) {
+			giftTypesDiv.style.display = "block";
+		}
+		document.body.style.overflow = "hidden";
+		var msgtoast = document.querySelector(".desktopError");
+		msgtoast.style.display = "none";
+	});
+	function createOccGiftTypes(clickdata, id, isExist) {
+		if (isExist) {
+			var checkExist = document.getElementById(id);
+			if (checkExist) {
+				checkExist.remove();
+			}
+		}
+		var asignIdType = id === "occassionsDiv" ? "occassionsDiv" : "giftTypesDiv";
+		var endPoint = document.querySelector("body");
+		var listDiv = document.createElement("div");
+		listDiv.className = "listPopup";
+		listDiv.setAttribute("id", id);
+		listDiv.innerHTML =
+			id === "occassionsDiv"
+				? '<h2>Select Occasion <i class="material-icons">close</i></h2><ul><div class="new-loader-area"><div class="new-loader"></div></div></ul>'
+				: '<h2>Select Gift Type <i class="material-icons">close</i></h2><ul><div class="new-loader-area"><div class="new-loader"></div></div></ul>';
+		endPoint.appendChild(listDiv);
+		if (allData && allData !== null) {
+			if (clickdata === "") {
+				asignIdType == "occassionsDiv" ? appnedList(allData.occassions, id) : appnedList(allData.giftTypes, id);
+			} else {
+				appnedList(clickdata, id);
+			}
+		} else {
+			fetch('https://atcdel.fnp.com/chocolate/v1/global/static/app_quick_search', {
+        headers: {
+          'x-domain': 'www.fnp.com',
+        },
+      }).then(function (res) {
+					return res.json();
+				})
+				.then(function (data) {
+					allData = data;					
+					sessionStorage.setItem("giftFinderData", JSON.stringify(allData));
+					if (clickdata === "") {
+						asignIdType == "occassionsDiv" ? appnedList(allData.occassions, id) : appnedList(allData.giftTypes, id);
+					} else {
+						appnedList(clickdata, id);
+					}
+				});
+		}
+	}
+	//append list
+	function appnedList(listData, id) {
+		var asignIdTypes = id === "occassionsDiv" ? "giftTypesDiv" : "occassionsDiv";
+		var funType = id === "occassionsDiv" ? "occFun(event)" : "gifFun(event)";
+		var openedDiv = document.getElementById(id);
+		if (openedDiv) {
+			var loader = openedDiv.querySelector(".new-loader-area");
+			var unOrderList = openedDiv.querySelector("ul");
+			if (loader && unOrderList) {
+				loader.remove();
+				var listItems =
+					listData &&
+					listData
+						.map(function (item) {
+							return '<li onclick="' + funType + '" data-val="' + item.value + '" data-id="' + asignIdTypes + '">' + item.label + "</li>";
+						})
+						.join("");
+				unOrderList.innerHTML = listItems;
+			}
+		}
+	}
+
+	function checkCloseIcons(closeIcon) {
+		if (closeIcon) {
+			closeIcon.forEach((el) => {
+				el.addEventListener("click", () => {
+					el.closest(".listPopup").style.display = "none";
+					transbg.style.display = "none";
+					document.body.style.overflow = "auto";
+				});
+			});
+		}
+	}
+	function occFun(e) {
+		checkobjexist("occ");
+		var selectedItem = e.target.innerHTML;
+		var id = e.target.dataset.id;
+		var inputOcc = document.getElementById("occassionsinput");
+		inputOcc.value = selectedItem;
+		occassions.innerHTML = 'Occasion<span class="placeholders selected">' + selectedItem + "</span>";
+		var selectedItemVal = e.target.dataset.val;
+		selectedItemVal = selectedItemVal.replace(/\-/g, "");
+		selectedItemVal = selectedItemVal.trim();
+		createOccGiftTypes(allData[selectedItemVal], id, true);
+		document.querySelectorAll(".listPopup").forEach(function (el) {
+			el.style.display = "none";
+		});
+		transbg.style.display = "none";
+		document.body.style.overflow = "auto";
+	}
+
+	function gifFun(e) {
+		checkobjexist("pt");
+		var selectedItem = e.target.innerHTML;
+		var id = e.target.dataset.id;
+		var inputgift = document.getElementById("gifttypeinput");
+		inputgift.value = selectedItem;
+		giftType.innerHTML = 'Gift Type<span class="placeholders selected">' + selectedItem + "</span>";
+		var selectedItemVal = e.target.dataset.val;
+		selectedItemVal = selectedItemVal.replace(/\-/g, "");
+		selectedItemVal = selectedItemVal.trim();
+		createOccGiftTypes(allData[selectedItemVal], id, true);
+		document.querySelectorAll(".listPopup").forEach(function (el) {
+			el.style.display = "none";
+		});
+		transbg.style.display = "none";
+		document.body.style.overflow = "auto";
+	}
+	quickSearchBtn.addEventListener("click", function () {
+		var occassionsInput = document.getElementById("occassionsinput");
+		var gifttypeInput = document.getElementById("gifttypeinput");
+		var selectedOcc = occassionsInput.value;
+		var selectedGiftType = gifttypeInput.value;
+		var parametersForOccpt = "?promo=desk_hp_quicksearch" + finalUrl;
+		if (selectedOcc === "" && selectedGiftType === "") {
+			var msgtoast = document.querySelector(".desktopError");
+			msgtoast.style.display = "flex";
+		} else {
+			var combination = selectedOcc + selectedGiftType;
+			cdp.findGift(selectedOcc, selectedGiftType, "", "");
+			var finalCombinations = combination.toLowerCase().replace(/\s/g, "");
+			finalCombinations = finalCombinations.replace("'", "");
+			var lastSelectedPincode = document.getElementById("lastSelectedPincode").value;
+			var lastSelectedAddress = document.getElementById("lastSelectedAddress").value;
+			myCheckCookies(lastSelectedPincode, lastSelectedAddress);
+			window.location.href = "/" + allData.combinations[finalCombinations] + parametersForOccpt;
+		}
+	});
+
+	function checkobjexist(obj) {
+		selectfirstlength = selectfirst.length;
+		if (selectfirstlength > 0) {
+			if (selectfirst.includes(obj)) {
+				var index = selectfirst.indexOf(obj);
+				selectfirst.splice(index, 1);
+			}
+			selectfirst.push(obj);
+		} else {
+			selectfirst.push(obj);
+		}
+		selectfirstlength = selectfirst.length;
+		finalUrl = finalSelectSequence();
+	}
+
+	function finalSelectSequence() {
+		var finalSelectpromo = "";
+		for (var i = 0; i < selectfirstlength; i++) {
+			finalSelectpromo += "_" + selectfirst[i];
+		}
+		return finalSelectpromo;
+	}
+
+	function occassionsTag(occassionsName) {
+		var replaced = occassionsName.split(" ").join("-");
+		replaced = replaced.replace("'", "");
+		return replaced.toLocaleLowerCase();
+	}
+
+	function shaking() {
+		document.querySelector(".msgtoast.show").classList.add("shake");
+		setTimeout(function () {
+			document.querySelector(".msgtoast.show").classList.remove("shake");
+		}, 500);
+	}
+	//get Pincodes
+	var pincodeInput = document.getElementById("QuickSeacrchpincode");
+	pincodeInput.addEventListener("keyup", getPincode);
+	pincodeInput.addEventListener("keypress", stopText);
+	var pincodeData = [];
+	var pincodeList = "";
+	var displayList = document.querySelector(".pincodeListItems");
+	function stopText(event) {
+		var theEvent = event || window.event;
+		// Handle paste
+		if (theEvent.type === "paste") {
+			key = event.clipboardData.getData("text/plain");
+		} else {
+			// Handle key press
+			var key = theEvent.keyCode || theEvent.which;
+			key = String.fromCharCode(key);
+		}
+		var regex = /[0-9]|\./;
+		if (!regex.test(key)) {
+			theEvent.returnValue = false;
+			if (theEvent.preventDefault) theEvent.preventDefault();
+		}
+	}
+
+	function getPincode() {
+		var valueLength = pincodeInput.value;
+		valueLength.length >= 2 ? displayData() : emptyData();
+		function emptyData() {
+			pincodeData = [];
+			pincodeList = "";
+			displayList.style.display = "none";
+		}
+
+		function displayData() {
+			if (valueLength.length == 2) {
+				fetchPincodes(valueLength, true);
+			} else if (valueLength.length > 2) {
+				displayList.style.display = "flex";
+				var input, filter, ul, li, a, i, txtValue;
+				input = document.getElementById("QuickSeacrchpincode");
+				filter = input.value.toUpperCase();
+				ul = document.getElementById("pincodeUL");
+				li = ul.getElementsByTagName("li");
+				for (i = 0; i < li.length; i++) {
+					txtValue = li[i].textContent || li[i].innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						li[i].style.display = "";
+					} else {
+						li[i].style.display = "none";
+					}
+				}
+			}
+		}
+	}
+	//set pincode
+	function fillPincode(elem) {
+		checkobjexist("pin");
+		var selectedPin = elem.getAttribute("rel");
+		var selectedAddress = elem.getAttribute("data-address");
+		document.getElementById("QuickSeacrchpincode").value = selectedPin;
+		displayList.style.display = "none";
+		document.getElementById("lastSelectedPincode").value = selectedPin;
+		document.getElementById("lastSelectedAddress").value = selectedPin + ", " + selectedAddress;
+	}
+	//close list clcik outsite
+	document.addEventListener("mouseup", function (e) {
+		var container = document.querySelector(".sec.occassions-input.pincodeSec");
+		if (container && !container.contains(e.target)) {
+			displayList.style.display = "none";
+		}
+	});
+	//check cookies
+	function myCheckCookies(lastSelectedPincode, lastSelectedAddress) {
+		var date, expires;
+		date = new Date();
+		date.setDate(date.getDate()+30);
+		expires = "; expires="+date.toUTCString();
+		var path = "/";
+		if (lastSelectedPincode !== "" && lastSelectedAddress !== "") {
+			var cookieValueSelectedPincode = getCookieName("lastSelectedPincode");
+			var cookieValueSelectedAddress = getCookieName("lastSelectedAddress");
+			if (cookieValueSelectedPincode !== "" && cookieValueSelectedAddress !== "") {
+				document.cookie = "lastSelectedPincode=''";
+				document.cookie = "lastSelectedAddress=''";
+				document.cookie = "lastSelectedPincode=" + lastSelectedPincode + expires + "; path=" + path;
+				document.cookie = "lastSelectedAddress=" + lastSelectedAddress + expires + "; path=" + path;
+			} else {
+				document.cookie = "lastSelectedPincode=''";
+				document.cookie = "lastSelectedAddress=''";				
+				document.cookie = "lastSelectedPincode=" + lastSelectedPincode + expires + "; path=" + path;
+				document.cookie = "lastSelectedAddress=" + lastSelectedAddress + expires + "; path=" + path;
+			}
+		}
+	}
+	//
+	function checkPincodeSelectedOnLoad() {
+		var cookieValueSelectedPincode = getCookieName("lastSelectedPincode");
+		var cookieValueSelectedAddress = getCookieName("lastSelectedAddress");
+		if (cookieValueSelectedPincode !== "" && cookieValueSelectedAddress !== "") {
+			document.getElementById("lastSelectedPincode").value = cookieValueSelectedPincode;
+			document.getElementById("lastSelectedAddress").value = cookieValueSelectedAddress;
+			document.getElementById("QuickSeacrchpincode").value = cookieValueSelectedPincode;
+			fetchPincodes(cookieValueSelectedPincode.substring(0, 2), false);
+		}
+	}
+	window.addEventListener("load", function () {
+		checkPincodeSelectedOnLoad();
+	});
+	//fetch pincodes
+	function fetchPincodes(valueLength, uldisplay) {
+		if (availablePinCodes.length && availablePinCodes.indexOf(valueLength) > -1) {
+			fetch("https://atcdel.fnp.com/chocolate/v1/global/static/pincode/" + valueLength)
+				.then(function (res) {
+					return res.json();
+				})
+				.then(function (data) {
+					pincodeData = data;
+					if (pincodeData.length > 0) {
+						pincodeData.forEach(function (item) {
+							var objArr = Object.keys(item);
+							pincodeList +=
+								"<li rel='" +
+								objArr[0] +
+								"' data-address='" +
+								item[objArr] +
+								"' onclick='fillPincode(this)'>" +
+								objArr[0] +
+								", " +
+								item[objArr] +
+								"</li>";
+						});
+						if (displayList) {
+							displayList.querySelector("ul").innerHTML = pincodeList;
+							if (uldisplay) {
+								displayList.style.display = "flex";
+							}
+						}
+					}
+				});
+		} else {
+			displayList.querySelector("ul").innerHTML = "";
+			if (uldisplay) {
+				displayList.style.display = "flex";
+			}
+		}
+	}
+	//show don't know popup
+	var dontknowList = document.querySelectorAll(".pincodeListItems span");
+	dontknowList &&
+		dontknowList.length &&
+		dontknowList.forEach(function (item) {
+			item.addEventListener("click", createPopupDiv);
+		});
+
+	function createPopupDiv(e) {
+		loadGoogleMap();
+		var dontknowItem = e.target;
+		var checkPopup = document.querySelector(".popupTransBg");
+		if (checkPopup) {
+			checkPopup.remove();
+		}
+		var popupTransBg = document.createElement("div");
+		popupTransBg.className = "popupTransBg";
+		popupTransBg.innerHTML = `<div class="dontknowPopup">
+            <i class="material-icons closePopup">close</i>
+            <div class="location-popup_location-heading-suggestion">Choose your Delivery Location</div>
+            <div class="location-popup_location-subheading-suggestion">Enter area or locality to get the Pincode.</div>
+            <div class="location-popup_area-block location-popup_block-suggestion">
+                <div class="location-popup_pin-search-box">
+                    <div class="location-popup_place-icon">
+                        <i class="material-icons location-popup_place-pin">place</i>
+                    </div>
+                    <div class="location-popup_cancel-icon">
+                        <i class="material-icons location-popup_clear-pin">close</i>
+                    </div>
+                    <div style="width: 100%;">
+                        <input id="searchPincode" placeholder="*Enter Area or Locality" type="text" class="pac-target-input" autocomplete="off">
+                    </div>
+                </div>
+                <span id="popupSelectedPinCode" class="location-popup_selected-pin"></span>
+                <button class="disabled" tabindex="-1" type="button" disabled id="popupContinue">Continue</button>
+            </div>
+        </div>`;
+		document.body.appendChild(popupTransBg);
+		//google map
+		if (dontknowItem) {
+			setTimeout(function () {
+				initialize();
+				//google.maps.event.addDomListener(dontknowItem, 'click', initialize);
+				//close popup
+				var popupContinue = document.getElementById("popupContinue");
+				popupContinue &&
+					popupContinue.addEventListener("click", function () {
+						if (popupSelectedPinCode !== "") {
+							document.querySelector(".popupTransBg").style.display = "none";
+							document.getElementById("QuickSeacrchpincode").value = popupSelectedPinCode;
+							document.getElementById("lastSelectedPincode").value = popupSelectedPinCode;
+
+							fetchPincodes(popupSelectedPinCode.substring(0, 2), false);
+							document.getElementById("searchPincode").value = "";
+							document.getElementById("popupSelectedPinCode").innerHTML = "";
+						}
+					});
+				//close popup without action
+				document.querySelector(".dontknowPopup i.closePopup").addEventListener("click", function () {
+					document.querySelector(".popupTransBg").style.display = "none";
+					document.getElementById("QuickSeacrchpincode").value = "";
+					document.getElementById("searchPincode").value = "";
+					document.getElementById("popupSelectedPinCode").innerHTML = "";
+				});
+				//google map
+			}, 1000);
+		}
+	}
+	function loadGoogleMap() {
+		var isExist = document.getElementById("googleMap");
+		if (!isExist) {
+			var head = document.getElementsByTagName("head")[0];
+			var script = document.createElement("script");
+			script.id = "googleMap";
+			script.type = "text/javascript";
+			script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDyubnG8Oavl7JiQ_Saj56tFuL823vphUo&libraries=places";
+			head.appendChild(script);
+		}
+	}
+	function getCookieName(cname) {
+		var name = cname + "=";
+		var decodedCookie = decodeURIComponent(document.cookie);
+		var ca = decodedCookie.split(";");
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == " ") {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				return c.substring(name.length, c.length);
+			}
+		}
+		return "";
+	}
+
+	//
+	function initialize() {
+		var input = document.getElementById("searchPincode");
+		var options = {
+			componentRestrictions: {
+				country: "in",
+			},
+		};
+		var autocomplete = new google.maps.places.Autocomplete(input, options);
+		google.maps.event.addListener(autocomplete, "place_changed", function () {
+			var place = autocomplete.getPlace();
+			var lat = place.geometry.location.lat();
+			var lng = place.geometry.location.lng();
+			getPinFromAddress(lat, lng, place.formatted_address);
+		});
+	}
+
+	function getPinFromAddress(lat, lng, address) {
+		fetch("/d/control/getPinCodeByPostalAddress?latitude=" + lat + "&longitude=" + lng)
+			.then(function (res) {
+				return res.json();
+			})
+			.then(function (data) {
+				document.getElementById("popupSelectedPinCode").innerHTML = "Pincode:" + data.pincode;
+				document.getElementById("popupContinue").classList.remove("disabled");
+				document.getElementById("popupContinue").removeAttribute("disabled");
+				popupSelectedPinCode = data.pincode;
+				document.getElementById("lastSelectedAddress").value = address;
+			});
+	}
+</script>

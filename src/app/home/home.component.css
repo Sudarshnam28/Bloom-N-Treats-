@@ -1,0 +1,14 @@
+.navbar-nav {
+    margin-left: auto; /* Align navbar items to the right */
+}
+
+.navbar-nav .nav-link {
+    color: #000; /* Set text color */
+    font-weight: 600; /* Set font weight */
+    text-transform: uppercase; /* Convert text to uppercase */
+    margin-right: 1rem; /* Add margin between navbar items */
+}
+
+.navbar-nav .nav-link.redHover:hover {
+    color: red; /* Change text color on hover */
+}

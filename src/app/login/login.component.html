@@ -1,0 +1,28 @@
+<div   class="login-container">
+  <h1 style="color: midnightblue;font-style: italic;margin-left: 40px;">Login</h1>
+  <div class="login-image">
+    <img src="assets\images\login1.jpg" alt="Login">
+  </div>
+  <form (ngSubmit)="loginValidate(loginForm.value)" #loginForm="ngForm">
+    <label for="Username">Username:</label>
+    <input type="text" id="userName" name="userName"  ngModel  #userName="ngModel" placeholder="Enter userName" required minlength="14" maxlength="30">
+   
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"  ngModel  #password="ngModel" placeholder="Enter password" minlength="8" maxlength="20">
+    
+    <button type="submit" [disabled]="!loginForm.form.valid">Login</button><br/><br/>
+    <h6 class="signup-link" (click)="signUp()"><u>New user? Create an Account</u></h6>
+    <!-- <button id="button" (click)="signUp()">SignUp</button> -->
+     
+
+  </form>
+  
+  <div>
+    <div *ngIf="userName.errors?.['required'] && userName.touched"><p>"please enter valid Username"</p></div>
+    <div *ngIf="userName.errors?.['minlength'] && userName.touched"><p>"please enter atleast 14 characters for Username"</p></div>
+    <div *ngIf="userName.errors?.['maxlength'] && userName.touched"><p>"please enter atleast 30 characters for Username"</p></div>
+    <div *ngIf="password.errors?.['required'] && password.touched"><p>"please enter valid password"</p></div>
+    <div *ngIf="password.errors?.['minlength'] && password.touched"><p>"please enter  atleast 8 characters for password"</p></div>
+    <div *ngIf="password.errors?.['maxlength'] && password.touched"><p>"please enter  atleast 20 characters for password"</p></div> 
+ </div>
+  </div>

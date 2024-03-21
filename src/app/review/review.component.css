@@ -1,0 +1,59 @@
+
+input{
+    width: 100vw;
+    padding-left: 50px;
+   
+  }
+  .review-container {
+      max-width: 500px;
+      margin: 0 auto;
+      border: 2px solid black;
+      background-color:rgb(148, 214, 238);
+      height: 200px;
+    }
+    
+    .review-item {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    .review-item p {
+      margin: 0;
+    }
+    
+    .review-form {
+      margin-top: 20px;
+    }
+    
+    .review-form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .review-form textarea,
+    .review-form input[type="number"],
+    .review-form button {
+      width: 20%;
+      margin-bottom: 10px;
+    }
+    
+    .review-form button {
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .review-form button:hover {
+      background-color: #0056b3;
+    }
+    button{
+      margin-left: 250px;
+    }
+    #text{
+
+    }

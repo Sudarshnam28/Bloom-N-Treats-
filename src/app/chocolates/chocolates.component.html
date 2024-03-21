@@ -1,0 +1,12 @@
+<h2>Chocolates</h2>
+<div class="col-12" style="padding-left: 20px; padding-right: 20px;">
+  <div class="card-container">
+    <div class="card" *ngFor="let prod of productList">
+      <img class="card-img-top" [src]="prod.productImageUrl" alt="Card image cap">
+      <h3>{{prod.productName}}</h3>
+      <p>Price:{{prod.productPrice | currency:'INR'}}</p>
+      
+      <button class="add-to-cart" (click)="addToCart(prod)">Add to Cart</button>
+    </div>
+  </div>
+</div>
