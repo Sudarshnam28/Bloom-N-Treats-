@@ -1,0 +1,13 @@
+package com.dao;
+
+public class CartDTO {
+
+	private long id;
+	private long price;
+	private int productId;
+	private long orderId;
+	private String productName;
+	private byte[] returnedItem;
+	private int customer_id;
+	
+}

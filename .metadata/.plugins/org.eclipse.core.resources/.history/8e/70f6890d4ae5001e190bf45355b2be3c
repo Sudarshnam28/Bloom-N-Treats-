@@ -1,0 +1,5 @@
+package com.enu;
+
+public enum OrderStatus {
+
+}

@@ -1,0 +1,91 @@
+package com.model;
+
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+@Entity
+public class CartItems {
+  
+	private long id;
+	private double price;
+	
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name="product_id")
+	private Product product;
+	
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name="id")
+	private Customer customer;
+	
+	@OneToOne
+	@JoinColumn(name="order_id")
+	private Order order;
+
+	public CartItems() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public CartItems(long id, double price, Product product, Customer customer, Order order) {
+		super();
+		this.id = id;
+		this.price = price;
+		this.product = product;
+		this.customer = customer;
+		this.order = order;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	@Override
+	public String toString() {
+		return "CartItems [id=" + id + ", price=" + price + ", product=" + product + ", customer=" + customer
+				+ ", order=" + order + "]";
+	}
+	
+}

@@ -1,0 +1,38 @@
+package com.ts.CakeProject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.dao.OrderDetailsDao;
+import com.dao.ProductDAO;
+import com.model.OrderDetails;
+import com.model.Product;
+
+@RestController
+public class OrderDetailsController {
+
+	@Autowired
+	OrderDetailsDao orderdetailsdao;
+	
+	@RequestMapping("/registerOrderDetails")
+	public void register() {
+		
+		OrderDetails od1 = new OrderDetails();
+		od1.setQuantity(1);
+		od1.setprice(56878.89);
+
+		orderdetailsdao.register(od1);
+	}
+
+	@RequestMapping("/showAllOrderDetails")
+	public List<OrderDetails> showAllOrderDetails() {
+		List<OrderDetails> orderDetailsList = orderdetailsdao.getOrderDetails();
+		return orderDetailsList;
+	}
+	
+}
+

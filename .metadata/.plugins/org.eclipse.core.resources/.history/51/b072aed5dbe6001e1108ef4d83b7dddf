@@ -1,0 +1,48 @@
+package com.model;
+
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+public class Review {
+	@Id @GeneratedValue
+	private int id;
+	private String feed_back;
+	
+	public Review() {}
+	
+	
+
+	public Review(int id, String feed_back) {
+		super();
+		this.id = id;
+		this.feed_back = feed_back;
+	}
+
+
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFeedBack() {
+		return feed_back;
+	}
+
+	public void setFeedBack(String feed_back) {
+		this.feed_back = feed_back;
+	}
+
+	@Override
+	public String toString() {
+		return "Review [id=" + id + ", FeedBack=" + feed_back + "]";
+	}
+	
+	
+	
+}

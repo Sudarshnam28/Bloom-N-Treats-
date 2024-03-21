@@ -1,0 +1,125 @@
+package com.model;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.enu.OrderStatus;
+ 
+@Entity
+public class Order {
+  
+	 @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private long id;
+	    private String description;
+	    private String address;
+	    private String paymentType;
+	    private Date date;
+	    private long price;
+	    private OrderStatus orderStatus;
+
+	    @ManyToOne
+	    @JoinColumn(name = "customer_id") 
+	    private Customer customer;
+
+	    @OneToMany(mappedBy = "order")
+	    private List<CartItems> cartItems;
+
+	public Order() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Order(long id, String description, String address, String paymentType, Date date, long price,
+			OrderStatus orderStatus) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.address = address;
+		this.paymentType = paymentType;
+		this.date = date;
+		this.price = price;
+		this.orderStatus = orderStatus;
+		
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public long getPrice() {
+		return price;
+	}
+
+	public void setPrice(long price) {
+		this.price = price;
+	}
+
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", description=" + description + ", address=" + address + ", paymentType="
+				+ paymentType + ", date=" + date + ", price=" + price + ", customer=" + customer + "]";
+	}
+	
+	
+}

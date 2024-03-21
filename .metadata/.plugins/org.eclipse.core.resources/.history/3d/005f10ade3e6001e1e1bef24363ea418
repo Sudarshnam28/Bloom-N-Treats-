@@ -1,0 +1,37 @@
+package com.ts.CakeProject;
+
+
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.dao.CustomerDAO;
+import com.dao.OrdersDao;
+import com.model.Customer;
+import com.model.OrderDetails;
+import com.model.Orders;
+
+@RestController
+public class OrdersController {
+
+	@Autowired
+	OrdersDao ordersdao;
+	
+	@RequestMapping("/registerOrders")
+	public void register(){
+		Orders o1 = new Orders();
+		o1.setOrderStatus("on the Way");
+		o1.setOrderDate(new Date("02/05/2021"));
+		
+		ordersdao.register(o1);
+	}
+
+	@RequestMapping("/showAllOrders")
+	public List <Orders> showAllOrders(){
+		List <Orders> ordersList = ordersdao.getOrders();
+		return ordersList; //browser or any client
+	}
+}

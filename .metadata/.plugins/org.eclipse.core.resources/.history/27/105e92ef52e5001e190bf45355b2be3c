@@ -1,0 +1,52 @@
+package com.dao;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.enu.OrderStatus;
+import com.model.Customer;
+import com.model.Order;
+
+@Service
+public class CustomerDAO {
+
+	@Autowired
+	private CustomerRepo customerRepo;
+	
+	@Autowired
+	private OrderRepo orderRepo;
+
+	public void registerCustomer(Customer customer) {
+		customerRepo.save(customer);
+		Order order=new Order();
+		order.setPrice(0L);
+		order.setOrderStatus(OrderStatus.PENDING);
+		order.setCustomer(customer);
+		orderRepo.save(order);
+	}
+
+	public Customer findByUserNamePassword(String user_name, String password) {
+		return customerRepo.findByUserNamePassword(user_name,password);
+		
+	}
+
+	public List<Customer> getAllCustomers(Customer customer) {
+		// TODO Auto-generated method stub
+		return customerRepo.findAll();
+		
+	}
+
+	public Customer getCustomerById(int id) {
+		return customerRepo.findById(id).orElse(new Customer());
+		}
+	public Customer updateCustomer(Customer cust) {
+		return customerRepo.save(cust);		
+	}
+	public void deleteCustById(int id) {
+		customerRepo.deleteById(id);
+		
+	}
+	
+}
