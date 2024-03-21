@@ -1,31 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
   
-  private loggedIn = false; 
+   isUserloggedIn :any; 
+   loginStatus: Subject<any>;      
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+    this.isUserloggedIn=true;
+    this.loginStatus = new Subject();
+   }
 
-  isLoggedIn(): boolean {
-    return this.loggedIn;
+   getLoginStatus(): any {
+    return this.loginStatus.asObservable();
   }
 
   setUserLoggedIn(): any {
-    this.loggedIn = true;
-    console.log("user logged in");
+    this.isUserloggedIn = true;
+    this.loginStatus.next(true);   
   }
 
   getUserLoggedStatus(): boolean {
-    return this.loggedIn;
+    return this.isUserloggedIn;
   }
 
   setUserLogout(): void {
-    this.loggedIn = false;
+    this.isUserloggedIn = false;
+    this.loginStatus.next(false);
   }
 
   logout(): void {
@@ -33,7 +39,7 @@ export class CustomerService {
     localStorage.removeItem('token');
   
     // Set the user login status to false
-    this.loggedIn = false;
+    this.isUserloggedIn = false;
   
     // Redirect to the login page
     this.router.navigate(['/header/login']);

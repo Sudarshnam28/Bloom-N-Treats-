@@ -48,7 +48,7 @@ const routes: Routes = [
     {path:'birthday',component:BirthdayComponent},
     {path:'unique-items',component:UniqueItemsComponent},
     {path:'gift-hampers',component:GiftHampersComponent},
-    {path:'cart',component:CartComponent},
+    {path:'cart',component:CartComponent, canActivate: [AuthGuard] },
     {path:'indoor-plants',component:IndoorPlantsComponent},
     {path:'chocolates',component:ChocolatesComponent},
     {path:'contact-us',component:ContactUsComponent},

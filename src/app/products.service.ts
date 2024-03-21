@@ -35,6 +35,12 @@ updateProduct(obj:any){
 deleteProduct(productId: any) {
   return this.http.delete(Constant.API_END_POINT + Constant.METHODS.DELETE_PRODUCT + '/' + productId);
 }
+updateCategory(categoryId:any,updatedCategory:any){
+  return this.http.post(Constant.API_END_POINT+Constant.METHODS.UPDATE_CATEGORY,categoryId,updatedCategory);
+}
+deleteCategory(categoryId: any,updatedCategory: any) {
+  return this.http.delete(Constant.API_END_POINT + Constant.METHODS.DELETE_CATEGORY + '/' + categoryId);
+}
 
 getProductByCategory(categoryId:any){
   return this.http.get(Constant.API_END_POINT+Constant.METHODS.GET_PRODUCT_BY_CATEGORY_ID+'/'+categoryId);
@@ -44,4 +50,5 @@ addToCart(product: any) {
   cartItems.push(product);
   localStorage.setItem('cartItems', JSON.stringify(cartItems));
 }
+
 }

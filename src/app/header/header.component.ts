@@ -9,8 +9,13 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   isUserLoggedIn:boolean;
+  loginStatus: any; 
   constructor(public service: CustomerService) {this.isUserLoggedIn=false;}
-
+  ngOnInit(){
+    this.service.getLoginStatus().subscribe((loginStatusData: any) => {
+      this.loginStatus = loginStatusData;
+    });
+  }
   logout(): void {
     this.service.logout();
   }

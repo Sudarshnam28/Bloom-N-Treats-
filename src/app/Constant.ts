@@ -8,7 +8,10 @@ export const Constant={
     DELETE_PRODUCT:'deleteProductById',
    GET_PRODUCT_BY_CATEGORY_ID:'getAllProductsByCategoryId',
    ADD_REVIEWS:'addReviews',
-  GET_ALL_REVIEWS:'getAllReviews'
+  GET_ALL_REVIEWS:'getAllReviews',
+  UPDATE_CATEGORY:'updateCategory',
+  DELETE_CATEGORY:'deleteCategoryById'
+
 
 
   }

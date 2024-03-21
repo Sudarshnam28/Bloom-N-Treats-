@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../cart.service';
+import { CartService, CartItem } from '../cart.service';
 import { Router } from '@angular/router';
-
-interface CartItem {
-  productId: number;
-  productName: string;
-  productPrice: number;
-  quantity: number;
-}
+import { CustomerService } from '../customer.service';
 
 @Component({
   selector: 'app-cart',
@@ -15,13 +9,16 @@ interface CartItem {
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+
   cartItems: CartItem[] = [];
   totalAmount: number = 0;
+  isLoggedIn: boolean = true;
 
-  constructor(private cartService: CartService,private router:Router) {}
+  constructor(private cartService: CartService, private router: Router, private service: CustomerService) {}
 
   ngOnInit(): void {
     this.loadCart();
+    this.isLoggedIn = this.service.setUserLoggedIn(); 
   }
 
   loadCart(): void {
@@ -30,14 +27,13 @@ export class CartComponent implements OnInit {
   }
 
   addToCart(product: CartItem): void {
-    this.cartService.addToCart(product);
-    this.loadCart();
+  
+      this.cartService.addToCart(product);
+      this.loadCart();
+      alert("Product added to cart successfully!");
+    
   }
-
-  removeFromCart(productId: number): void {
-    this.cartService.removeFromCart(productId);
-    this.loadCart();
-  }
+  
 
   increaseQuantity(item: CartItem): void {
     item.quantity++;
@@ -57,7 +53,18 @@ export class CartComponent implements OnInit {
     this.totalAmount = this.cartItems.reduce((acc, item) => acc + item.productPrice * item.quantity, 0);
   }
 
+  removeFromCart(productId: number): void {
+    this.cartService.removeFromCart(productId);
+    this.loadCart();
+  }
+
   buyNow(): void {
+    this.service.setUserLoggedIn();
     this.router.navigate(['/header/order']);
-  }
+  }
+
+  logout(): void {
+    this.service.setUserLogout();
+    this.isLoggedIn = false;
+  }
 }

@@ -17,4 +17,17 @@ this.products$=this.prodService.getCategory().pipe(
 );
 }
 
+onEdit(categoryId: any): void {
+  const updatedCategory = {}; // Define your updatedCategory object here
+  this.prodService.updateCategory(categoryId, updatedCategory).subscribe(
+    (res: any) => {
+      console.log('Category updated successfully:', res);
+    },
+    (error: any) => {
+      console.error('Error updating category:', error);
+    }
+  );
+}
+
+
 }
